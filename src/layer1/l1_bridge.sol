@@ -1,15 +1,35 @@
 // SPDX-License-Identifier: MIT 
 pragma solidity ^0.8.13;
 
+import "lib/openzeppelin-contracts/contracts/token/ERC20/utils/SafeERC20.sol";
+import "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol";
+
+
+
 
 contract L1Bridge {
-    address public l2Bridge;
+    address public lnBridge;
 
-    function setL2Bridge(address _l2Bridge) public {
-        l2Bridge = _l2Bridge;
+    enum ActionType {
+        Deposit,
+        Withdraw
     }
 
-    function deposit(address _token, uint256 _amount) public {
-        require(_amount > 0, "Amount must be greater than 0");
+    struct Action{
+        ActionType action;
+        address token;
+        uint256 amount;
     }
+
+    event LogAction(Action);
+
+
+    mapping (address => Action) public deposits;
+
+    constructor(address _lnBridge){
+        require(_lnBridge != address(0), "Invalid address.");
+        lnBridge = _lnBridge;
+    }
+
+
 }
