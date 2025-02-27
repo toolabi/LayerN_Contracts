@@ -40,7 +40,7 @@ contract L1Bridge {
         require(_withdraw.amount > 0, "Amount must be greater than 0");
 
         SafeERC20.safeTransferFrom(IERC20(_withdraw.token), address(this), msg.sender, _withdraw.amount);
-
+        balances[msg.sender][_withdraw.token] -= _withdraw.amount;
         emit LogAction(_withdraw);
     }
 
