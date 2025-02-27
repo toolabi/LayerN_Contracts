@@ -20,7 +20,7 @@ contract L1Bridge {
 
     event LogAction(Action);
 
-    mapping(address => Action) public deposits;
+    mapping(address => mapping(address => uint256)) public balances;
 
     constructor(address _lnBridge) {
         require(_lnBridge != address(0), "Invalid address.");
@@ -31,6 +31,8 @@ contract L1Bridge {
         require(_deposit.amount > 0, "Amount must be greater than 0");
 
         SafeERC20.safeTransferFrom(IERC20(_deposit.token), msg.sender, address(this), _deposit.amount);
+
+        balances[msg.sender][_deposit.token] += _deposit.amount;
         emit LogAction(_deposit);
     }
 
@@ -38,6 +40,7 @@ contract L1Bridge {
         require(_withdraw.amount > 0, "Amount must be greater than 0");
 
         SafeERC20.safeTransferFrom(IERC20(_withdraw.token), address(this), msg.sender, _withdraw.amount);
+
         emit LogAction(_withdraw);
     }
 
