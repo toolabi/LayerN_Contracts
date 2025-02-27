@@ -38,5 +38,14 @@ contract L1Bridge {
         emit LogAction(_deposit);
     }
 
+    function withdraw(Action memory _withdraw) public {
+
+        require(_withdraw.amount > 0, "Amount must be greater than 0");
+
+        SafeERC20.safeTransferFrom(IERC20(_withdraw.token),address(this), msg.sender,  _withdraw.amount);
+        emit LogAction(_withdraw);
+
+    }
+
 
 }
