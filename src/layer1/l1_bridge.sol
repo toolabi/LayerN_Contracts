@@ -47,5 +47,10 @@ contract L1Bridge {
 
     }
 
+    function updateLnBridge(address _newBridge) public {
+        require(_newBridge != address(0) && _newBridge != lnBridge, "Invalid address");
+        lnBridge = _newBridge;
+    }
+
 
 }
