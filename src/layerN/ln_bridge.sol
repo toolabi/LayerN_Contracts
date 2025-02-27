@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.13;
 
-
+// fix this
 import "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol";
 import "lib/openzeppelin-contracts/contracts/token/ERC20/ERC20.sol";
 
@@ -40,17 +40,20 @@ contract LnBridge {
         if (addr == address(0)){
             addr = _deploy(erc20BytecodeHash, _getsalt(_deposit.token));
         }
-        IERC20(_deposit.token)._mint(msg.sender, _deposit.amount);
+        // add protocol specific erc20
+        // IERC20(_deposit.token)._mint(msg.sender, _deposit.amount);
 
 
     }
 
 
+// check helpr functions
     function _getsalt(address _token) internal returns(bytes32){
         bytes32 identifier = keccak256(abi.encode(address(_token)));
         bytes32 salt = bytes32(uint256(uint160(msg.sender)));
         return keccak256(bytes.concat(identifier, salt));
     }
+
 
     function _deploy(bytes memory bytecode, bytes32 _salt) internal returns(address) {
         address addr;
