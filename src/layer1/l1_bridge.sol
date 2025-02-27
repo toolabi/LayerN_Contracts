@@ -31,5 +31,12 @@ contract L1Bridge {
         lnBridge = _lnBridge;
     }
 
+    function deposit(Action memory _deposit) public {
+        require(_deposit.amount > 0, "Amount must be greater than 0");
+
+        SafeERC20.safeTransferFrom(IERC20(_deposit.token), msg.sender, address(this), _deposit.amount);
+        emit LogAction(_deposit);
+    }
+
 
 }
