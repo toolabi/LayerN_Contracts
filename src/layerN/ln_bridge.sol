@@ -44,6 +44,13 @@ contract LnBridge {
         // IERC20(_deposit.token)._mint(msg.sender, _deposit.amount);
     }
 
+    function requestWithdraw(Action memory _withdraw){
+        require(_deposit.token != address(0), "Invalid input.");
+        require(_withdraw.amount > 0, "Amount must be greater than 0");
+        balances[msg.sender][_withdraw.token] -= _withdraw.amount;
+
+    }
+
     // check helpr functions
     function _getsalt(address _token) internal returns (bytes32) {
         bytes32 identifier = keccak256(abi.encode(address(_token)));
