@@ -43,7 +43,7 @@ contract LnBridge {
         // IERC20(_deposit.token)._mint(msg.sender, _deposit.amount);
     }
 
-    function requestWithdraw(Action memory _withdraw) {
+    function requestWithdraw(Action memory _withdraw) public {
         require(_deposit.token != address(0), "Invalid input.");
         require(_withdraw.amount > 0, "Amount must be greater than 0");
         balances[msg.sender][_withdraw.token] -= _withdraw.amount;
