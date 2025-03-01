@@ -37,6 +37,8 @@ contract LnBridge {
         address addr = tokens[_deposit.token];
         if (addr == address(0)) {
             addr = _deploy(erc20BytecodeHash, _getsalt(_deposit.token));
+            tokens[_deposit.token] = addr; 
+
         }
         // add protocol specific erc20
         // IERC20(_deposit.token)._mint(msg.sender, _deposit.amount);
@@ -57,6 +59,7 @@ contract LnBridge {
 
             if iszero(extcodesize(addr)) { revert(0, 0) }
         }
+
 
         emit Deployed(addr, _salt);
         return addr;
